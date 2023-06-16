@@ -1,5 +1,7 @@
 package com.fei.common.cache.localcache;
 
+import com.fei.common.entity.LoginUser;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
@@ -9,15 +11,18 @@ import java.util.concurrent.TimeUnit;
  * @description
  */
 @Component
-public class JwtTokenCache extends LocalCache<String, String> {
+public class LoginUserCache extends LocalCache<String, LoginUser> {
+
+    @Value("${token.expireTime}")
+    private int expireTime;
 
     @Override
     protected long getExpire() {
-        return 8;
+        return expireTime;
     }
 
     @Override
     protected TimeUnit timeUnit() {
-        return TimeUnit.HOURS;
+        return TimeUnit.MINUTES;
     }
 }

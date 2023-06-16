@@ -14,12 +14,24 @@ import java.io.Serializable;
 @ApiModel(value = "用户信息")
 public class UserInfoResponse implements Serializable {
 
-    @ApiModelProperty("用户名")
-    private String userName;
+    @ApiModelProperty("用户ID")
+    private Long userId;
 
-    @ApiModelProperty("年龄")
-    private Integer age;
+    @ApiModelProperty("部门ID")
+    private Long deptId;
 
-    @ApiModelProperty("住址")
-    private String address;
+    @ApiModelProperty("账号")
+    private String account;
+
+    @ApiModelProperty("昵称")
+    private String nickName;
+
+    @ApiModelProperty("邮箱")
+    private String email;
+
+    @ApiModelProperty("手机号")
+    private String phone;
+
+    @ApiModelProperty("账号状态")
+    private String accountStatus;
 }

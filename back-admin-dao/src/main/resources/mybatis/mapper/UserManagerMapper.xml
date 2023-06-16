@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fei.dao.mapper.UserManagerMapper">
 
-    <select id="getUserInfoByAccount" resultType="com.fei.dao.entity.UserInfo">
-        select * from user_info where account = #{account}
+    <select id="getSysUserByAccount" resultType="com.fei.dao.entity.SysUser">
+        select * from sys_user where account = #{account}
     </select>
 </mapper>
 

@@ -1,11 +1,11 @@
 package com.fei.dao.mapper;
 
-import com.fei.dao.entity.UserInfo;
+import com.fei.dao.entity.SysUser;
 
 /**
  * @author ZhangPengFei
  * @description
  */
 public interface UserManagerMapper {
-    UserInfo getUserInfoByAccount(String account);
+    SysUser getSysUserByAccount(String account);
 }

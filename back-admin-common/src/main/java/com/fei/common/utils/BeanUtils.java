@@ -1,6 +1,6 @@
 package com.fei.common.utils;
 
-import com.fei.common.enums.TransferEnum;
+import com.fei.model.enums.TransferEnum;
 import com.fei.common.exceptions.BeanUtilsException;
 import lombok.SneakyThrows;
 import org.springframework.beans.BeanWrapper;
