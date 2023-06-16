@@ -4,6 +4,7 @@ import system from '@/router/system';
 import product from '@/router/product';
 import other from '@/router/other';
 import user from '@/router/user';
+import {getToken} from "@/utils/auth";
 
 const routes = [];
 
@@ -23,10 +24,15 @@ router.beforeEach((to, from, next) => {
     if (to.meta.title) {
         document.title = to.meta.title
     }
-    if (to.path === '/') {
-        next({path:'/system/home'});
+    if (to.path === '/login') {
+        next()
+        return
     }
-    next();
+    if (getToken()) {
+        next()
+        return
+    }
+    next({path:'/login'})
 })
 
 export default router;

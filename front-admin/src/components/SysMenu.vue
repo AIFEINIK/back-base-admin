@@ -24,11 +24,24 @@
           <el-menu-item :index="subItem.name" @click="menuClick(subItem)">{{ subItem.label }}</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
+
+      <el-submenu index="me">
+        <template slot="title">
+          <i class="el-icon-location"></i>
+          <span>我的</span>
+        </template>
+        <el-menu-group>
+          <el-menu-item>修改密码</el-menu-item>
+          <el-menu-item @click="loginOut">退出登录</el-menu-item>
+        </el-menu-group>
+      </el-submenu>
     </el-menu>
   </div>
 </template>
 
 <script>
+import {MessageBox} from "element-ui";
+import store from '@/store'
 export default {
   data() {
     return {
@@ -112,7 +125,14 @@ export default {
       if (this.$route.path !== item.path && !(this.$route.path === '/home' && item.path === '/')) {
         this.$router.push(item.path);
       }
-    }
+    },
+    loginOut() {
+      MessageBox.confirm('确定要退出吗', '系统提示', { confirmButtonText: '退出', cancelButtonText: '取消', type: 'warning' }).then(() => {
+        store.dispatch('logOut').then(() => {
+          this.$router.push('/login')
+        })
+      })
+    },
   },
   computed: {
     // 没有子菜单

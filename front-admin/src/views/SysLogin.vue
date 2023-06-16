@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import {getToken, removeToken} from "@/utils/auth";
+import {getToken} from "@/utils/auth";
 import store from '@/store'
 export default {
 
@@ -64,10 +64,9 @@ export default {
   },
 
   created() {
-    removeToken()
-    // if (getToken()) {
-    //   this.$router.push('/system/home')
-    // }
+    if (getToken()) {
+      this.$router.push('/system/home')
+    }
   }
 }
 </script>
