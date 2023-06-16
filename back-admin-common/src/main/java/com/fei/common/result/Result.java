@@ -10,7 +10,7 @@ import java.util.Collections;
 
 public class Result<T> implements Serializable {
 
-    private int status = 200;
+    private int code = 200;
     private String message = "success";
 
     private T data;
@@ -47,41 +47,41 @@ public class Result<T> implements Serializable {
     }
 
     public static <T> Result<T> error(Result result) {
-        return new Result<>(result.getStatus(), result.getMessage());
+        return new Result<>(result.getCode(), result.getMessage());
     }
 
     public Result(int status, String message) {
-        this.setStatus(status);
+        this.setCode(status);
         this.message = message;
     }
 
     public Result(IResponseStatus status) {
-        this.setStatus(status.getValue());
+        this.setCode(status.getValue());
         this.message = status.getName();
     }
 
     public Result(int status, String message, T data) {
-        this.setStatus(status);
+        this.setCode(status);
         this.message = message;
         this.data = data;
     }
 
     public boolean ok() {
-        return status == 200;
+        return code == 200;
     }
 
     public boolean success() {
-        return status == 200 && this.data != null;
+        return code == 200 && this.data != null;
     }
 
     public boolean successAndNotEmpty() {
         if (data instanceof Collection) {
-            return status == 200 && !CollectionUtils.isEmpty((Collection) data);
+            return code == 200 && !CollectionUtils.isEmpty((Collection) data);
         }
         if (data instanceof Page) {
-            return status == 200 && !CollectionUtils.isEmpty(((Page<?>) data).getPage());
+            return code == 200 && !CollectionUtils.isEmpty(((Page<?>) data).getPage());
         }
-        return status == 200 && this.data != null;
+        return code == 200 && this.data != null;
 
     }
 
@@ -105,12 +105,12 @@ public class Result<T> implements Serializable {
         this.data = data;
     }
 
-    public int getStatus() {
-        return status;
+    public int getCode() {
+        return code;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setCode(int code) {
+        this.code = code;
     }
 }
 

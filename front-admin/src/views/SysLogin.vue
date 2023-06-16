@@ -12,7 +12,7 @@
           </el-form-item>
 
           <el-form-item prop="pwd">
-            <el-input type="password" v-model="loginForm.pwd" placeholder="密码">
+            <el-input type="password" v-model="loginForm.password" placeholder="密码">
             </el-input>
           </el-form-item>
 
@@ -34,14 +34,14 @@ export default {
     return {
       loginForm:{
         account: '',
-        pwd: ''
+        password: ''
       },
 
       rules: {
         account: [
           {required: true, message: "请输入账号", trigger: 'blur'}
         ],
-        pwd: [
+        password: [
           {required: true, message: "请输入密码", trigger: 'blur'}
         ]
       }
