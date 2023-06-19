@@ -2,9 +2,11 @@ package com.fei.interfaces.facade;
 
 
 import com.fei.common.result.Result;
-import com.fei.interfaces.request.GetUserInfoRequest;
+import com.fei.interfaces.request.GetSysUserRequest;
+import com.fei.interfaces.request.ModifySysUserPasswordRequest;
 import com.fei.interfaces.response.UserInfoResponse;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 /**
@@ -13,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
  */
 public interface UserManagerFacade {
 
-    @GetMapping("getUserInfo")
-    Result<UserInfoResponse> getUserInfo(@RequestBody GetUserInfoRequest getUserInfoRequest);
+    @GetMapping("getSysUser")
+    Result<UserInfoResponse> getSysUser(@RequestBody GetSysUserRequest getUserInfoRequest);
+
+    @PostMapping("modifySysUserPassword")
+    Result<Boolean> modifySysUserPassword(@RequestBody ModifySysUserPasswordRequest request);
 }

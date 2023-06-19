@@ -2,6 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fei.dao.mapper.UserManagerMapper">
 
+    <update id="updateSysUser" parameterType="com.fei.dao.entity.SysUser">
+        update sys_user
+        <set>
+            <if test="password != null">
+                password = #{password}
+            </if>
+        </set>
+        <where>
+            user_id = #{userId}
+        </where>
+    </update>
+
     <select id="getSysUserByAccount" resultType="com.fei.dao.entity.SysUser">
         select * from sys_user where account = #{account}
     </select>

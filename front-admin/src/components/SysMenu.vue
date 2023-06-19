@@ -30,22 +30,26 @@
           <i class="el-icon-location"></i>
           <span>我的</span>
         </template>
-        <el-menu-group>
-          <el-menu-item>修改密码</el-menu-item>
+        <el-menu-item-group>
+          <el-menu-item @click="modifyPassword = true">修改密码</el-menu-item>
           <el-menu-item @click="loginOut">退出登录</el-menu-item>
-        </el-menu-group>
+        </el-menu-item-group>
       </el-submenu>
     </el-menu>
+
+    <modify-password :modifyPasswordVisible="modifyPassword" @modifyPasswordClose="modifyPassword = false"/>
   </div>
 </template>
 
 <script>
-import {MessageBox} from "element-ui";
+import ModifyPassword from "@/components/ModifyPassword";
 import store from '@/store'
+
 export default {
   data() {
     return {
       isCollapse: true,
+      modifyPassword: false,
       menuData: [
         {
           path: '/',
@@ -114,6 +118,12 @@ export default {
       ]
     };
   },
+  components: {
+    ModifyPassword
+  },
+  created() {
+
+  },
   methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
@@ -127,11 +137,17 @@ export default {
       }
     },
     loginOut() {
-      MessageBox.confirm('确定要退出吗', '系统提示', { confirmButtonText: '退出', cancelButtonText: '取消', type: 'warning' }).then(() => {
+      this.$confirm('确定要退出吗', '系统提示', {
+        confirmButtonText: '退出',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
         store.dispatch('logOut').then(() => {
           this.$router.push('/login')
         })
-      })
+      }).catch(e => {
+        console.error(e)
+      });
     },
   },
   computed: {

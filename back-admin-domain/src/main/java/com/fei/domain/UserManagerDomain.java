@@ -22,4 +22,8 @@ public class UserManagerDomain {
         SysUser sysUser = userManagerMapper.getSysUserByAccount(account);
         return BeanUtils.transform(SysUserBO.class, sysUser, true, BeanUtils.TransformEnumType.VALUE_TO_ENUM);
     }
+
+    public void updateSysUser(SysUserBO sysUser) {
+        userManagerMapper.updateSysUser(BeanUtils.transform(SysUser.class, sysUser, BeanUtils.TransformEnumType.ENUM_TO_VALUE));
+    }
 }

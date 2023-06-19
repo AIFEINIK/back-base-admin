@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @description
  */
 @Data
-public class GetUserInfoRequest implements Serializable {
+public class GetSysUserRequest implements Serializable {
 
     private String account;
     private String userName;

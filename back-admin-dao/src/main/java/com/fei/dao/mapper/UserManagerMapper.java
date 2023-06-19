@@ -8,4 +8,6 @@ import com.fei.dao.entity.SysUser;
  */
 public interface UserManagerMapper {
     SysUser getSysUserByAccount(String account);
+
+    void updateSysUser(SysUser sysUser);
 }
