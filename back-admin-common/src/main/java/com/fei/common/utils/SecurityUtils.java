@@ -34,17 +34,6 @@ public class SecurityUtils {
     }
 
     /**
-     * 获取用户账户
-     **/
-    public static String getUsername() {
-        try {
-            return getLoginUser().getUsername();
-        } catch (Exception e) {
-            throw new IllegalArgumentException("获取用户账户异常");
-        }
-    }
-
-    /**
      * 获取用户
      **/
     public static LoginUser getLoginUser() {

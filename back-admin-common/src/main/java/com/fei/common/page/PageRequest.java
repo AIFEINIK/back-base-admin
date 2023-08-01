@@ -13,7 +13,7 @@ public class PageRequest {
 
 
     public static final PageRequest NO_PAGE = new PageRequest();
-    public static final Integer DEFAULT_MAX_PAGE_SIZE = 1100;
+    public static final Integer DEFAULT_MAX_PAGE_SIZE = 1000;
     public static final Integer DEFAULT_PAGE_SIZE = 20;
     public static final Integer PAGE_SIZE_500 = 500;
     public static final Integer PAGE_SIZE_200 = 200;

@@ -30,9 +30,12 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
+
         LoginUser loginUser = tokenSupport.getLoginUser(request);
 
         if (Objects.nonNull(loginUser) && Objects.isNull(SecurityUtils.getAuthentication())) {
+            // 验证token，刷新过期时间
+            tokenSupport.verifyToken(loginUser);
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser, null, null);
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);

@@ -1,6 +1,6 @@
 package com.fei.common.support;
 
-import com.fei.common.cache.localcache.LoginUserCache;
+import com.fei.common.cache.redis.RedisCache;
 import com.fei.common.constants.CommonConstants;
 import com.fei.common.entity.LoginUser;
 import com.google.common.collect.Maps;
@@ -15,6 +15,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author ZhangPengFei
@@ -34,7 +35,11 @@ public class TokenSupport {
     private String secret;
 
     @Resource
-    private LoginUserCache loginUserCache;
+    private RedisCache redisCache;
+    /**
+     * 20分钟
+     */
+    private static final Long MILLIS_MINUTE_TEN = 20 * 60 * 1000L;
 
     /**
      * 创建token
@@ -47,8 +52,8 @@ public class TokenSupport {
         loginUser.setLoginTime(System.currentTimeMillis());
         loginUser.setExpireTime(loginUser.getLoginTime() + expireTime * 60 * 1000L);
 
-        String userKey = getUserCacheKey(token);
-        loginUserCache.set(userKey, loginUser);
+        String userKey = getTokenKey(token);
+        redisCache.setCacheObject(userKey, loginUser, expireTime, TimeUnit.MINUTES);
 
         Map<String, Object> claims = Maps.newHashMap();
         claims.put(CommonConstants.LOGIN_USER_KEY, token);
@@ -61,19 +66,42 @@ public class TokenSupport {
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
     }
 
-    public String getUserCacheKey(String token) {
-        return CommonConstants.LOGIN_USER_KEY + token;
+    public String getTokenKey(String uuid) {
+        return CommonConstants.LOGIN_TOKEN_KEY + uuid;
+    }
+
+    /**
+     * 验证token有效期
+     * @param loginUser
+     */
+    public void verifyToken(LoginUser loginUser) {
+        long expireTime = loginUser.getExpireTime();
+        long currentTime = System.currentTimeMillis();
+        if (expireTime - currentTime <= MILLIS_MINUTE_TEN) {
+            refreshToken(loginUser);
+        }
+    }
+
+    /**
+     * 刷新token
+     * @param loginUser
+     */
+    public void refreshToken(LoginUser loginUser) {
+        loginUser.setExpireTime(System.currentTimeMillis() + expireTime * 60 * 1000L);
+        String tokenKey = getTokenKey(loginUser.getToken());
+        redisCache.setCacheObject(tokenKey, loginUser, expireTime, TimeUnit.MINUTES);
     }
 
     public LoginUser getLoginUser(HttpServletRequest request) {
+        // 获取请求携带的令牌
         String token = getToken(request);
         if (StringUtils.isEmpty(token)) {
             return null;
         }
 
         Claims claims = parseToken(token);
-        String uid = (String) claims.get(CommonConstants.LOGIN_USER_KEY);
-        return loginUserCache.get(getUserCacheKey(uid));
+        String uuid = (String) claims.get(CommonConstants.LOGIN_USER_KEY);
+        return redisCache.getCacheObject(getTokenKey(uuid));
     }
 
     /**
@@ -88,11 +116,23 @@ public class TokenSupport {
                 .getBody();
     }
 
+    /**
+     * 获取请求token
+     * @param request
+     * @return
+     */
     private String getToken(HttpServletRequest request) {
         String token = request.getHeader(header);
         if (StringUtils.isNotEmpty(token) && token.startsWith(CommonConstants.TOKEN_PREFIX)) {
             token = token.replace(CommonConstants.TOKEN_PREFIX, StringUtils.EMPTY);
         }
         return token;
+    }
+
+    public void delLoginUser(String token) {
+        if (StringUtils.isNotEmpty(token)) {
+            String tokenKey = getTokenKey(token);
+            redisCache.deleteObject(tokenKey);
+        }
     }
 }

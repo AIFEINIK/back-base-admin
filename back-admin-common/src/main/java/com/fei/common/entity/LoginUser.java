@@ -2,17 +2,15 @@ package com.fei.common.entity;
 
 import com.fei.model.bo.SysUserBO;
 import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
+import java.io.Serializable;
 
 /**
  * @author ZhangPengFei
  * @description 登录用户身份权限
  */
 @Data
-public class LoginUser implements UserDetails {
+public class LoginUser implements Serializable {
 
     /**
      * 系统用户
@@ -41,38 +39,7 @@ public class LoginUser implements UserDetails {
         this.sysUser = sysUser;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public String getPassword() {
-        return sysUser.getPassword();
-    }
-
-    @Override
-    public String getUsername() {
-        return sysUser.getAccount();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
+    public String getUserName() {
+        return getSysUser().getUserName();
     }
 }

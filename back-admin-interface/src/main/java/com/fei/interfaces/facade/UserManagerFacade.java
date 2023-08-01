@@ -1,9 +1,12 @@
 package com.fei.interfaces.facade;
 
 
+import com.fei.common.page.Page;
 import com.fei.common.result.Result;
 import com.fei.interfaces.request.GetSysUserRequest;
 import com.fei.interfaces.request.ModifySysUserPasswordRequest;
+import com.fei.interfaces.request.SearchSysUserPageRequest;
+import com.fei.interfaces.response.SearchSysUserPageResponse;
 import com.fei.interfaces.response.UserInfoResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,4 +23,7 @@ public interface UserManagerFacade {
 
     @PostMapping("modifySysUserPassword")
     Result<Boolean> modifySysUserPassword(@RequestBody ModifySysUserPasswordRequest request);
+
+    @PostMapping("searchSysUserPage")
+    Result<Page<SearchSysUserPageResponse>> searchSysUserPage(@RequestBody SearchSysUserPageRequest request);
 }

@@ -11,7 +11,7 @@
 
     <artifactId>back-admin-service</artifactId>
     <version>1.0</version>
-
+    <packaging>jar</packaging>
     <name>back-admin-service</name>
 
     <dependencies>

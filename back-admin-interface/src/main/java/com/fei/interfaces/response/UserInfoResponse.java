@@ -1,7 +1,6 @@
 package com.fei.interfaces.response;
 
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -14,24 +13,68 @@ import java.io.Serializable;
 @ApiModel(value = "用户信息")
 public class UserInfoResponse implements Serializable {
 
-    @ApiModelProperty("用户ID")
+    /**
+     * 用户ID
+     */
     private Long userId;
 
-    @ApiModelProperty("部门ID")
+    /**
+     * 部门ID
+     */
     private Long deptId;
 
-    @ApiModelProperty("账号")
-    private String account;
+    /**
+     * 账号
+     */
+    private String userName;
 
-    @ApiModelProperty("昵称")
+    /**
+     * 昵称
+     */
     private String nickName;
 
-    @ApiModelProperty("邮箱")
+    /**
+     * 用户类型
+     */
+    private String userType;
+
+    /**
+     * 邮箱
+     */
     private String email;
 
-    @ApiModelProperty("手机号")
-    private String phone;
+    /**
+     * 手机号
+     */
+    private String phoneNumber;
 
-    @ApiModelProperty("账号状态")
-    private String accountStatus;
+    /**
+     * 性别
+     */
+    private String sex;
+
+    /**
+     * 用户头像
+     */
+    private String avatar;
+
+    /**
+     * 密码
+     */
+    private String password;
+
+    /**
+     * 账号状态
+     */
+    private String status;
+
+    /**
+     * 删除标识
+     */
+    private String delFlag;
+
+    /**
+     * 创建时间
+     */
+    private Long createTime;
 }

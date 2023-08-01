@@ -4,6 +4,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.InitializingBean;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -13,7 +14,9 @@ import java.util.concurrent.TimeUnit;
  * @description 本地缓存
  */
 @Slf4j
-public abstract class LocalCache<K, V> {
+public abstract class LocalCache<K, V> implements InitializingBean {
+
+    protected LoadingCache<K, V> cache;
 
     private final CacheLoader<K, V> cacheLoader = new CacheLoader<K, V>() {
         @Override
@@ -22,9 +25,12 @@ public abstract class LocalCache<K, V> {
         }
     };
 
-    protected LoadingCache<K, V> cache = CacheBuilder.newBuilder()
-            .expireAfterWrite(getExpire() <= 0 ? 5 : getExpire(), Objects.isNull(timeUnit()) ? TimeUnit.MINUTES : timeUnit())
-            .build(cacheLoader());
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        cache = CacheBuilder.newBuilder()
+                .expireAfterWrite(getExpire() <= 0 ? 5 : getExpire(), Objects.isNull(timeUnit()) ? TimeUnit.MINUTES : timeUnit())
+                .build(cacheLoader());
+    }
 
     protected CacheLoader<K, V> cacheLoader() {
         return cacheLoader;

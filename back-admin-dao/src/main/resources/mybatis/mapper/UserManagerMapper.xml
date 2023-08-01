@@ -14,8 +14,29 @@
         </where>
     </update>
 
-    <select id="getSysUserByAccount" resultType="com.fei.dao.entity.SysUser">
-        select * from sys_user where account = #{account}
+    <select id="getSysUserByUserName" resultType="com.fei.dao.entity.SysUser">
+        select * from sys_user where user_name = #{userName}
+    </select>
+
+    <sql id="searchCondition">
+        <where>
+            <if test="userName != null">
+                and user_name = #{userName}
+            </if>
+            <if test="beginCreateTime != null and endCreateTime != null">
+                and create_time between #{beginCreateTime} and #{endCreateTime}
+            </if>
+        </where>
+    </sql>
+
+    <select id="getSysUserCount" resultType="java.lang.Integer">
+        select count(*) from sys_user
+        <include refid="searchCondition"/>
+    </select>
+
+    <select id="searchSysUsers" resultType="com.fei.dao.entity.SysUser">
+        select * from sys_user
+        <include refid="searchCondition"/>
     </select>
 </mapper>
 

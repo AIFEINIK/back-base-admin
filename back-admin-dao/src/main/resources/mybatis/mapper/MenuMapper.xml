@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fei.dao.mapper.MenuMapper">
+
+    <sql id="searchCondition">
+        <where>
+            <if test="userId != null">
+                and su.user_id = #{userId}
+            </if>
+            <if test="menuTree != null and menuTree == true">
+                and m.menu_type in ('M', 'C')
+                and m.status = 0
+                AND ro.status = 0
+            </if>
+        </where>
+    </sql>
+
+    <select id="searchSysMenus" resultType="com.fei.dao.entity.SysMenu">
+        select distinct m.menu_id,
+        m.parent_id,
+        m.menu_name,
+        m.path,
+        m.component,
+        m.`query`,
+        m.visible,
+        m.status,
+        ifnull(m.perms, '') as perms,
+        m.is_frame,
+        m.is_cache,
+        m.menu_type,
+        m.icon,
+        m.order_num,
+        m.create_time
+        from sys_menu m
+        left join sys_role_menu srm on m.menu_id = srm.menu_id
+        left join sys_user_role sur on srm.role_id = sur.role_id
+        left join sys_role ro on sur.role_id = ro.role_id
+        left join sys_user su on sur.user_id = su.user_id
+        <include refid="searchCondition"/>
+    </select>
+
+
+</mapper>
+

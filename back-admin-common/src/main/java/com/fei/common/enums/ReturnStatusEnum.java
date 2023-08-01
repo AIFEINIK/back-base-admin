@@ -39,12 +39,12 @@ public enum ReturnStatusEnum implements ResultAble, IResponseStatus {
     }
 
     @Override
-    public Result toResult() {
+    public <T> Result<T> toResult() {
         return Result.error(this.code, this.message);
     }
 
     @Override
-    public Result toResult(Object... args) {
+    public <T> Result<T> toResult(Object... args) {
         return Result.error(this.code, this.message, args);
     }
 }

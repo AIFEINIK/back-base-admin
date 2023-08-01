@@ -19,7 +19,7 @@ public class LoginRequest implements Serializable {
      * 账户
      */
     @NotBlank(message = "账号不能为空")
-    private String account;
+    private String userName;
 
     /**
      * 密码

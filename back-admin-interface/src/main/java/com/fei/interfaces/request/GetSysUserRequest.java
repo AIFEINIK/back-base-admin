@@ -11,6 +11,5 @@ import java.io.Serializable;
 @Data
 public class GetSysUserRequest implements Serializable {
 
-    private String account;
     private String userName;
 }

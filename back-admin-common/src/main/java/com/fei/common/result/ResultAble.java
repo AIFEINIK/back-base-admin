@@ -3,8 +3,8 @@ package com.fei.common.result;
 
 public interface ResultAble {
 
-    Result toResult();
+    <T> Result<T> toResult();
 
-    Result toResult(Object... args);
+    <T> Result<T> toResult(Object... args);
 
 }
