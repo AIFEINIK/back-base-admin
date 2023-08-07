@@ -61,6 +61,7 @@ public class LoginServiceImpl implements LoginService {
         }
 
         LoginUser loginUser = new LoginUser(sysUser);
+        loginUser.setPermissions(permissionSupport.getPermissions(sysUser));
         String token = tokenSupport.createToken(loginUser);
         return Result.success(LoginResponse.builder().token(token).build());
     }

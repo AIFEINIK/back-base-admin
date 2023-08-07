@@ -1,5 +1,6 @@
 package com.fei.common.support;
 
+import com.alibaba.fastjson2.JSON;
 import com.fei.common.cache.redis.RedisCache;
 import com.fei.common.constants.CommonConstants;
 import com.fei.common.entity.LoginUser;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.nio.ByteBuffer;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -101,7 +103,7 @@ public class TokenSupport {
 
         Claims claims = parseToken(token);
         String uuid = (String) claims.get(CommonConstants.LOGIN_USER_KEY);
-        return redisCache.getCacheObject(getTokenKey(uuid));
+        return JSON.parseObject(redisCache.getCacheObject(getTokenKey(uuid)), LoginUser.class);
     }
 
     /**

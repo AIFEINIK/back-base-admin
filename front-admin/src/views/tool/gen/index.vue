@@ -244,7 +244,7 @@ export default {
     getList() {
       this.loading = true;
       listTable(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-          this.tableList = response.rows;
+          this.tableList = response.page;
           this.total = response.total;
           this.loading = false;
         }
@@ -292,7 +292,7 @@ export default {
     /** 预览按钮 */
     handlePreview(row) {
       previewTable(row.tableId).then(response => {
-        this.preview.data = response.data;
+        this.preview.data = response;
         this.preview.open = true;
         this.preview.activeName = "domain.java";
       });

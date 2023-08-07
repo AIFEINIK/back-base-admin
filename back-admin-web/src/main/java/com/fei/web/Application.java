@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @ComponentScan(basePackages = {"com.fei"})
-@MapperScan("com.fei.dao")
+@MapperScan(basePackages = {"com.fei.dao", "com.fei.generator"})
 @EnableTransactionManagement(mode = AdviceMode.ASPECTJ)
 public class Application {
 

@@ -4,6 +4,7 @@ import com.fei.model.bo.SysUserBO;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * @author ZhangPengFei
@@ -31,6 +32,11 @@ public class LoginUser implements Serializable {
      * 过期时间
      */
     private Long expireTime;
+
+    /**
+     * 权限列表
+     */
+    private Set<String> permissions;
 
     public LoginUser() {
     }

@@ -1,20 +1,15 @@
 package com.fei.web.controller;
 
 import com.fei.common.result.Result;
-import com.fei.common.utils.SecurityUtils;
 import com.fei.interfaces.facade.LoginFacade;
 import com.fei.interfaces.request.LoginRequest;
 import com.fei.interfaces.response.GetRouterResponse;
 import com.fei.interfaces.response.GetUserInfoResponse;
 import com.fei.interfaces.response.LoginResponse;
-import com.fei.model.bo.SysUserBO;
 import com.fei.service.LoginService;
-import com.fei.service.PermissionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;

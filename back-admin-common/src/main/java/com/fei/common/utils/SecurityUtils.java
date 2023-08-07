@@ -2,6 +2,8 @@ package com.fei.common.utils;
 
 
 import com.fei.common.entity.LoginUser;
+import com.fei.common.exceptions.ServiceException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -41,6 +43,14 @@ public class SecurityUtils {
             return (LoginUser) getAuthentication().getPrincipal();
         } catch (Exception e) {
             throw new IllegalArgumentException("获取用户信息异常");
+        }
+    }
+
+    public static String getUserName() {
+        try {
+            return getLoginUser().getUserName();
+        } catch (Exception e) {
+            throw new IllegalArgumentException("获取用户账户异常");
         }
     }
 

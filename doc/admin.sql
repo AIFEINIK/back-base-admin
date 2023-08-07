@@ -202,6 +202,7 @@ create table sys_menu
 insert into sys_menu
 values ('1', '系统管理', '0', '1', 'system', null, '', false, true, 'M', 0, 0, '', 'system', 'admin', sysdate(), '', null,
         '系统管理目录');
+insert into sys_menu values('3', '系统工具', '0', '3', 'tool',  null, '', false, true, 'M', 0, 0, '', 'tool',     'admin', sysdate(), '', null, '系统工具目录');
 
 -- 二级菜单
 insert into sys_menu
@@ -231,6 +232,8 @@ values ('107', '通知公告', '1', '8', 'notice', 'system/notice/index', '', fa
 insert into sys_menu
 values ('108', '日志管理', '1', '9', 'log', '', '', false, true, 'M', '0', '0', '', 'log', 'admin', sysdate(), '', null,
         '日志管理菜单');
+insert into sys_menu values('115',  '表单构建', '3',   '1', 'build',      'tool/build/index',         '', 1, 0, 'C', '0', '0', 'tool:build:list',         'build',         'admin', sysdate(), '', null, '表单构建菜单');
+insert into sys_menu values('116',  '代码生成', '3',   '2', 'gen',        'tool/gen/index',           '', 1, 0, 'C', '0', '0', 'tool:gen:list',           'code',          'admin', sysdate(), '', null, '代码生成菜单');
 
 -- 三级菜单
 insert into sys_menu
@@ -364,6 +367,13 @@ values ('1037', '公告修改', '107', '3', '#', '', '', false, true, 'F', '0', 
 insert into sys_menu
 values ('1038', '公告删除', '107', '4', '#', '', '', false, true, 'F', '0', '0', 'system:notice:remove', '#', 'admin',
         sysdate(), '', null, '');
+-- 代码生成按钮
+insert into sys_menu values('1055', '生成查询', '116', '1', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:query',             '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1056', '生成修改', '116', '2', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:edit',              '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1057', '生成删除', '116', '3', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:remove',            '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1058', '导入代码', '116', '4', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:import',            '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1059', '预览代码', '116', '5', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:preview',           '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1060', '生成代码', '116', '6', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:code',              '#', 'admin', sysdate(), '', null, '');
 
 
 -- ----------------------------
