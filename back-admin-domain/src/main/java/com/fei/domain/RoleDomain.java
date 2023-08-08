@@ -4,7 +4,7 @@ import com.fei.common.page.PageRequest;
 import com.fei.common.utils.BeanUtils;
 import com.fei.dao.mapper.RoleMapper;
 import com.fei.model.bo.SysRoleBO;
-import com.fei.model.condition.SysRoleSearchCondition;
+import com.fei.model.bo.condition.SysRoleSearchCondition;
 import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Component;
 

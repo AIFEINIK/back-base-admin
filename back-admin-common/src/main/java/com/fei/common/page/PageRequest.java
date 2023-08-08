@@ -3,14 +3,11 @@ package com.fei.common.page;
 import lombok.Data;
 
 /**
- * @author Feinik
- * @Discription 分页request
- * @Data 2019/3/25
- * @Version 1.0.0
+ * @author ZhangPengFei
+ * @description 分页request
  */
 @Data
 public class PageRequest {
-
 
     public static final PageRequest NO_PAGE = new PageRequest();
     public static final Integer DEFAULT_MAX_PAGE_SIZE = 1000;

@@ -1,4 +1,4 @@
-package com.fei.model.condition;
+package com.fei.model.bo.condition;
 
 import lombok.Data;
 

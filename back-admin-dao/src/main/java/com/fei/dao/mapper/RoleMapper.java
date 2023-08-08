@@ -1,7 +1,7 @@
 package com.fei.dao.mapper;
 
 import com.fei.dao.entity.SysRole;
-import com.fei.model.condition.SysRoleSearchCondition;
+import com.fei.model.bo.condition.SysRoleSearchCondition;
 
 import java.util.List;
 

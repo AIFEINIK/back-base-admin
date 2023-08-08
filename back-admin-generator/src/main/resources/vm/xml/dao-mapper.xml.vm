@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${packageName}.dao.mapper.${ClassName}Mapper">
+
+    <sql id="searchAllColumns">
+        select#foreach($column in $columns) $column.columnName#if($foreach.count != $columns.size()),#end#end from ${tableName}
+    </sql>
+
+    <sql id="searchCondition">
+        <where>
+#foreach($column in $columns)
+    #set($queryType=$column.queryType)
+    #set($javaField=$column.javaField)
+    #set($javaType=$column.javaType)
+    #set($columnName=$column.columnName)
+    #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
+    #if($column.query)
+        #if($column.queryType == "EQ")
+            <if test="$javaField != null"> and $columnName = #{$javaField}</if>
+        #elseif($queryType == "NE")
+            <if test="$javaField != null"> and $columnName != #{$javaField}</if>
+        #elseif($queryType == "GT")
+            <if test="$javaField != null"> and $columnName &gt; #{$javaField}</if>
+        #elseif($queryType == "GTE")
+            <if test="$javaField != null"> and $columnName &gt;= #{$javaField}</if>
+        #elseif($queryType == "LT")
+            <if test="$javaField != null"> and $columnName &lt; #{$javaField}</if>
+        #elseif($queryType == "LTE")
+            <if test="$javaField != null"> and $columnName &lt;= #{$javaField}</if>
+        #elseif($queryType == "LIKE")
+            <if test="$javaField != null"> and $columnName like concat('%', #{$javaField}, '%')</if>
+        #elseif($queryType == "BETWEEN")
+            <if test="begin$AttrName != null and end$AttrName != null"> and $columnName between #{begin$AttrName} and #{end$AttrName}</if>
+        #end
+    #end
+#end
+        </where>
+    </sql>
+
+    <insert id="save${ClassName}" #if($pkColumn.increment) useGeneratedKeys="true" keyProperty="$pkColumn.javaField"#end>
+        insert into ${tableName}
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+    #foreach($column in $columns)
+        #if($column.columnName != $pkColumn.columnName || !$pkColumn.increment)
+            <if test="$column.javaField != null">$column.columnName,</if>
+        #end
+    #end
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+    #foreach($column in $columns)
+        #if($column.columnName != $pkColumn.columnName || !$pkColumn.increment)
+            <if test="$column.javaField != null">#{$column.javaField},</if>
+        #end
+    #end
+        </trim>
+    </insert>
+
+    <insert id="batchSave${ClassName}" #if($pkColumn.increment) useGeneratedKeys="true" keyProperty="$pkColumn.javaField"#end>
+        <foreach collection="list" item="item" separator=";">
+            insert into ${tableName}
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+        #foreach($column in $columns)
+            #if($column.columnName != $pkColumn.columnName || !$pkColumn.increment)
+                <if test="$column.javaField != null">$column.columnName,</if>
+            #end
+        #end
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+        #foreach($column in $columns)
+            #if($column.columnName != $pkColumn.columnName || !$pkColumn.increment)
+                <if test="item.$column.javaField != null">#{item.$column.javaField},</if>
+            #end
+        #end
+            </trim>
+        </foreach>
+    </insert>
+
+    <delete id="delete${ClassName}By${pkColumn.capJavaField}">
+        delete from ${tableName} where ${pkColumn.columnName} = #{${pkColumn.javaField}}
+    </delete>
+
+    <delete id="delete${ClassName}By${pkColumn.capJavaField}s">
+        delete from ${tableName} where ${pkColumn.columnName} in
+        <foreach item="${pkColumn.javaField}" collection="list" open="(" separator="," close=")">
+            #{${pkColumn.javaField}}
+        </foreach>
+    </delete>
+
+    <update id="modify${ClassName}">
+        update ${tableName}
+        <trim prefix="SET" suffixOverrides=",">
+    #foreach($column in $columns)
+        #if($column.columnName != $pkColumn.columnName)
+            <if test="$column.javaField != null">$column.columnName = #{$column.javaField},</if>
+        #end
+    #end
+        </trim>
+        where ${pkColumn.columnName} = #{${pkColumn.javaField}}
+    </update>
+
+    <update id="batchModify${ClassName}">
+        <foreach collection="list" item="item" separator=";">
+            update ${tableName}
+            <trim prefix="SET" suffixOverrides=",">
+        #foreach($column in $columns)
+            #if($column.columnName != $pkColumn.columnName)
+                <if test="$column.javaField != null">$column.columnName = #{item.$column.javaField},</if>
+            #end
+        #end
+            </trim>
+            where ${pkColumn.columnName} = #{item.${pkColumn.javaField}}
+        </foreach>
+    </update>
+
+    <select id="search${ClassName}WithCondition" resultType="${packageName}.dao.entity.${ClassName}">
+        <include refid="searchAllColumns"/>
+        <include refid="searchCondition"/>
+    </select>
+    
+    <select id="get${ClassName}By${pkColumn.capJavaField}" resultType="${packageName}.dao.entity.${ClassName}">
+        <include refid="searchAllColumns"/>
+        where ${pkColumn.columnName} = #{${pkColumn.javaField}}
+    </select>
+
+    <select id="search${ClassName}Count" resultType="integer">
+        select count(*) from ${tableName}
+        <include refid="searchCondition"/>
+    </select>
+</mapper>

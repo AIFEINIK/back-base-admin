@@ -1,0 +1,23 @@
+package ${packageName}.interfaces.facade;
+
+import com.fei.common.page.Page;
+import com.fei.common.result.Result;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+/**
+ * @author ${author}
+ * @description ${functionName}接口
+ */
+public interface ${ClassName}Facade {
+
+    /**
+    * 查询${functionName}列表
+    * @param request 请求参数
+    * @return 分页结果
+    */
+    @PostMapping("/search${ClassName}Page")
+#if($table.crud || $table.sub)
+    Result<Page<Search${ClassName}PageResponse>> search${ClassName}Page(@RequestBody Search${ClassName}PageRequest request);
+#end
+}

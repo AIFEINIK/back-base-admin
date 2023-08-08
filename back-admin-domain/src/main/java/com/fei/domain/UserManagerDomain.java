@@ -5,7 +5,7 @@ import com.fei.common.utils.BeanUtils;
 import com.fei.dao.entity.SysUser;
 import com.fei.dao.mapper.UserManagerMapper;
 import com.fei.model.bo.SysUserBO;
-import com.fei.model.condition.SysUserSearchCondition;
+import com.fei.model.bo.condition.SysUserSearchCondition;
 import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Component;
 

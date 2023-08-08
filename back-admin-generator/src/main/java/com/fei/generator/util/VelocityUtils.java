@@ -23,7 +23,7 @@ public class VelocityUtils {
     /**
      * mybatis空间路径
      */
-    private static final String MYBATIS_PATH = "main/resources/mapper";
+    private static final String MYBATIS_PATH = "main/resources/mybatis/mapper";
 
     /**
      * 默认上级菜单，系统工具
@@ -121,21 +121,25 @@ public class VelocityUtils {
      */
     public static List<String> getTemplateList(String tplCategory) {
         List<String> templates = new ArrayList<String>();
+        templates.add("vm/java/model-bo.java.vm");
+        templates.add("vm/java/model-bo-searchCondition.java.vm");
         templates.add("vm/java/domain.java.vm");
-        templates.add("vm/java/mapper.java.vm");
+        templates.add("vm/java/dao-entity.java.vm");
+        templates.add("vm/java/dao-entity-searchCondition.java.vm");
+        templates.add("vm/java/dao-mapper.java.vm");
+        templates.add("vm/xml/dao-mapper.xml.vm");
         templates.add("vm/java/service.java.vm");
         templates.add("vm/java/serviceImpl.java.vm");
-        templates.add("vm/java/controller.java.vm");
-        templates.add("vm/xml/mapper.xml.vm");
+        templates.add("vm/java/web-controller.java.vm");
+        templates.add("vm/java/interface-facade.java.vm");
+        templates.add("vm/java/interface-searchPageRequest.java.vm");
+        templates.add("vm/java/interface-searchPageResponse.java.vm");
         templates.add("vm/sql/sql.vm");
         templates.add("vm/js/api.js.vm");
         if (GenConstants.TPL_CRUD.equals(tplCategory)) {
             templates.add("vm/vue/index.vue.vm");
         } else if (GenConstants.TPL_TREE.equals(tplCategory)) {
             templates.add("vm/vue/index-tree.vue.vm");
-        } else if (GenConstants.TPL_SUB.equals(tplCategory)) {
-            templates.add("vm/vue/index.vue.vm");
-            templates.add("vm/java/sub-domain.java.vm");
         }
         return templates;
     }
@@ -156,23 +160,34 @@ public class VelocityUtils {
         String businessName = genTable.getBusinessName();
 
         String javaPath = PROJECT_PATH + "/" + StringUtils.replace(packageName, ".", "/");
-        String mybatisPath = MYBATIS_PATH + "/" + moduleName;
+        String mybatisPath = MYBATIS_PATH + "/";
         String vuePath = "vue";
 
-        if (template.contains("domain.java.vm")) {
-            fileName = StringUtils.format("{}/domain/{}.java", javaPath, className);
-        }
-        if (template.contains("sub-domain.java.vm") && StringUtils.equals(GenConstants.TPL_SUB, genTable.getTplCategory())) {
-            fileName = StringUtils.format("{}/domain/{}.java", javaPath, genTable.getSubTable().getClassName());
-        } else if (template.contains("mapper.java.vm")) {
-            fileName = StringUtils.format("{}/mapper/{}Mapper.java", javaPath, className);
+        if (template.contains("model-bo.java.vm")) {
+            fileName = StringUtils.format("{}/model/bo/{}BO.java", javaPath, className);
+        } else if (template.contains("model-bo-searchCondition.java.vm")) {
+            fileName = StringUtils.format("{}/model/bo/condition/{}SearchConditionBO.java", javaPath, className);
+        } else if (template.contains("dao-entity.java.vm")) {
+            fileName = StringUtils.format("{}/dao/entity/{}.java", javaPath, className);
+        } else if (template.contains("dao-entity-searchCondition.java.vm")) {
+            fileName = StringUtils.format("{}/dao/entity/condition/{}SearchCondition.java", javaPath, className);
+        } else if (template.contains("dao-mapper.java.vm")) {
+            fileName = StringUtils.format("{}/dao/mapper/{}Mapper.java", javaPath, className);
+        } else if (template.contains("domain.java.vm")) {
+            fileName = StringUtils.format("{}/domain/{}Domain.java", javaPath, className);
         } else if (template.contains("service.java.vm")) {
-            fileName = StringUtils.format("{}/service/I{}Service.java", javaPath, className);
+            fileName = StringUtils.format("{}/service/{}Service.java", javaPath, className);
         } else if (template.contains("serviceImpl.java.vm")) {
             fileName = StringUtils.format("{}/service/impl/{}ServiceImpl.java", javaPath, className);
-        } else if (template.contains("controller.java.vm")) {
+        } else if (template.contains("web-controller.java.vm")) {
             fileName = StringUtils.format("{}/controller/{}Controller.java", javaPath, className);
-        } else if (template.contains("mapper.xml.vm")) {
+        } else if (template.contains("interface-facade.java.vm")) {
+            fileName = StringUtils.format("{}/interfaces/facade/{}Facade.java", javaPath, className);
+        } else if (template.contains("interface-searchPageRequest.java.vm")) {
+            fileName = StringUtils.format("{}/interfaces/request/Search{}PageRequest.java", javaPath, className);
+        } else if (template.contains("interface-searchPageResponse.java.vm")) {
+            fileName = StringUtils.format("{}/interfaces/response/Search{}PageResponse.java", javaPath, className);
+        } else if (template.contains("dao-mapper.xml.vm")) {
             fileName = StringUtils.format("{}/{}Mapper.xml", mybatisPath, className);
         } else if (template.contains("sql.vm")) {
             fileName = businessName + "Menu.sql";
@@ -213,7 +228,6 @@ public class VelocityUtils {
         for (GenTableColumn column : columns) {
             if (!column.isSuperColumn() && GenConstants.TYPE_DATE.equals(column.getJavaType())) {
                 importList.add("java.util.Date");
-                importList.add("com.fasterxml.jackson.annotation.JsonFormat");
             } else if (!column.isSuperColumn() && GenConstants.TYPE_BIGDECIMAL.equals(column.getJavaType())) {
                 importList.add("java.math.BigDecimal");
             }

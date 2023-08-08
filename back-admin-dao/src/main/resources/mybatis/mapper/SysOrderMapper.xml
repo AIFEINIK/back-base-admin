@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fei.dao.mapper.SysOrderMapper">
+
+    <sql id="searchAllColumns">
+        select order_id, payment, pay_time, sku_name from sys_order
+    </sql>
+
+    <sql id="searchCondition">
+        <where>
+            <if test="payment != null"> and payment = #{payment}</if>
+            <if test="payTime != null"> and pay_time = #{payTime}</if>
+            <if test="skuName != null"> and sku_name like concat('%', #{skuName}, '%')</if>
+        </where>
+    </sql>
+
+    <insert id="saveSysOrder"  useGeneratedKeys="true" keyProperty="orderId">
+        insert into sys_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="payment != null">payment,</if>
+            <if test="payTime != null">pay_time,</if>
+            <if test="skuName != null">sku_name,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="payment != null">#{payment},</if>
+            <if test="payTime != null">#{payTime},</if>
+            <if test="skuName != null">#{skuName},</if>
+        </trim>
+    </insert>
+
+    <insert id="batchSaveSysOrder"  useGeneratedKeys="true" keyProperty="orderId">
+        <foreach collection="list" item="item" separator=";">
+            insert into sys_order
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="payment != null">payment,</if>
+                <if test="payTime != null">pay_time,</if>
+                <if test="skuName != null">sku_name,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.payment != null">#{item.payment},</if>
+                <if test="item.payTime != null">#{item.payTime},</if>
+                <if test="item.skuName != null">#{item.skuName},</if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <delete id="deleteSysOrderByOrderId">
+        delete from sys_order where order_id = #{orderId}
+    </delete>
+
+    <delete id="deleteSysOrderByOrderIds">
+        delete from sys_order where order_id in
+        <foreach item="orderId" collection="list" open="(" separator="," close=")">
+            #{orderId}
+        </foreach>
+    </delete>
+
+    <update id="modifySysOrder">
+        update sys_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="payment != null">payment = #{payment},</if>
+            <if test="payTime != null">pay_time = #{payTime},</if>
+            <if test="skuName != null">sku_name = #{skuName},</if>
+        </trim>
+        where order_id = #{orderId}
+    </update>
+
+    <update id="batchModifySysOrder">
+        <foreach collection="list" item="item" separator=";">
+            update sys_order
+            <trim prefix="SET" suffixOverrides=",">
+                <if test="payment != null">payment = #{item.payment},</if>
+                <if test="payTime != null">pay_time = #{item.payTime},</if>
+                <if test="skuName != null">sku_name = #{item.skuName},</if>
+            </trim>
+            where order_id = #{item.orderId}
+        </foreach>
+    </update>
+
+    <select id="searchSysOrderWithCondition" resultType="com.fei.dao.entity.SysOrder">
+        <include refid="searchAllColumns"/>
+        <where>  
+            <if test="payment != null"> and payment = #{payment}</if>
+            <if test="payTime != null"> and pay_time = #{payTime}</if>
+            <if test="skuName != null"> and sku_name like concat('%', #{skuName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="getSysOrderByOrderId" resultType="com.fei.dao.entity.SysOrder">
+        <include refid="searchAllColumns"/>
+        where order_id = #{orderId}
+    </select>
+
+    <select id="searchSysOrderCount" resultType="integer">
+        select count(*) from sys_order
+        <include refid="searchCondition"/>
+    </select>
+</mapper>

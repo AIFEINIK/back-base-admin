@@ -14,12 +14,11 @@ import com.fei.interfaces.request.SearchSysUserPageRequest;
 import com.fei.interfaces.response.SearchSysUserPageResponse;
 import com.fei.interfaces.response.UserInfoResponse;
 import com.fei.model.bo.SysUserBO;
-import com.fei.model.condition.SysUserSearchCondition;
+import com.fei.model.bo.condition.SysUserSearchCondition;
 import com.fei.service.UserManagerService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;

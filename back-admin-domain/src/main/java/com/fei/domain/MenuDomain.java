@@ -4,7 +4,7 @@ import com.fei.common.page.PageRequest;
 import com.fei.common.utils.BeanUtils;
 import com.fei.dao.mapper.MenuMapper;
 import com.fei.model.bo.SysMenuBO;
-import com.fei.model.condition.SysMenuSearchCondition;
+import com.fei.model.bo.condition.SysMenuSearchCondition;
 import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Component;
 

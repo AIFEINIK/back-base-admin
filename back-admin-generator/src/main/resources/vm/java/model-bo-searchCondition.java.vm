@@ -1,0 +1,17 @@
+package ${packageName}.model.bo.condition;
+
+import lombok.Data;
+import ${packageName}.model.bo.${ClassName}BO;
+
+/**
+ * @author ${author}
+ * @description ${functionName}查询条件
+ */
+@Data
+public class ${ClassName}SearchConditionBO extends ${ClassName}BO {
+
+    /**
+     * ${pkColumn.columnComment}
+     */
+    private List<${pkColumn.javaType}> ${pkColumn.javaField}s;
+}

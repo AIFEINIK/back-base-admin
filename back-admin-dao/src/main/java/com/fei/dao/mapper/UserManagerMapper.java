@@ -1,7 +1,7 @@
 package com.fei.dao.mapper;
 
 import com.fei.dao.entity.SysUser;
-import com.fei.model.condition.SysUserSearchCondition;
+import com.fei.model.bo.condition.SysUserSearchCondition;
 
 import java.util.List;
 

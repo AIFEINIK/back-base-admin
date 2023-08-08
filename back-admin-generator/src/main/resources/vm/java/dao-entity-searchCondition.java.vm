@@ -1,0 +1,17 @@
+package ${packageName}.dao.entity.condition;
+
+import lombok.Data;
+import ${packageName}.dao.entity.${ClassName};
+
+/**
+ * @author ${author}
+ * @description ${functionName}查询条件
+ */
+@Data
+public class ${ClassName}SearchCondition extends ${ClassName} {
+
+    /**
+     * ${table.pkColumn.columnComment}
+     */
+    private List<${table.pkColumn.javaType}> ${table.pkColumn.javaField}s;
+}

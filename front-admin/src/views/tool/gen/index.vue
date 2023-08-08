@@ -294,7 +294,7 @@ export default {
       previewTable(row.tableId).then(response => {
         this.preview.data = response;
         this.preview.open = true;
-        this.preview.activeName = "domain.java";
+        this.preview.activeName = "model-bo.java";
       });
     },
     /** 高亮显示 */

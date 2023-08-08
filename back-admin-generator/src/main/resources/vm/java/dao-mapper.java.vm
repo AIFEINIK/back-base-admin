@@ -1,0 +1,86 @@
+package ${packageName}.dao.mapper;
+
+import java.util.List;
+import ${packageName}.dao.entity.${ClassName};
+#if($table.sub)
+import ${packageName}.dao.entity.${subClassName};
+#end
+
+/**
+ * @author ${author}
+ * @description ${functionName}Mapper接口
+ */
+public interface ${ClassName}Mapper {
+
+    /**
+     * 新增${functionName}
+     *
+     * @param ${className} ${functionName}
+     * @return 结果
+     */
+    int save${ClassName}(${ClassName} ${className});
+
+    /**
+     * 批量新增${functionName}
+     *
+     * @param ${className}s ${functionName}
+     * @return 结果
+     */
+    int batchSave${ClassName}(List<${ClassName}> ${className}s);
+
+    /**
+     * 删除${functionName}
+     * 
+     * @param ${pkColumn.javaField} ${functionName}主键
+     * @return 结果
+     */
+    int delete${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaType} ${pkColumn.javaField});
+
+    /**
+     * 批量删除${functionName}
+     * 
+     * @param ${pkColumn.javaField}s 需要删除的数据主键集合
+     * @return 结果
+     */
+    int delete${ClassName}By${pkColumn.capJavaField}s(List<${pkColumn.javaType}> ${pkColumn.javaField}s);
+
+    /**
+     * 根据主键修改${functionName}
+     *
+     * @param ${className} ${functionName}
+     * @return 结果
+     */
+    int modify${ClassName}(${ClassName} ${className});
+
+    /**
+     * 批量根据主键修改${functionName}
+     *
+     * @param ${className}s ${functionName}
+     * @return 结果
+     */
+    int batchModify${ClassName}(List<${ClassName}> ${className}s);
+
+    /**
+     * 查询${functionName}
+     *
+     * @param ${pkColumn.javaField} ${functionName}主键
+     * @return ${functionName}
+     */
+    ${ClassName} get${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaType} ${pkColumn.javaField});
+
+    /**
+     * 查询${functionName}列表
+     *
+     * @param condition 查询条件
+     * @return ${functionName}集合
+     */
+    List<${ClassName}> search${ClassName}WithCondition(${ClassName}SearchCondition condition);
+
+    /**
+     * 查询${functionName}总数
+     *
+     * @param condition 查询条件
+     * @return ${functionName}总数
+     */
+    int search${ClassName}Count(${ClassName}SearchCondition condition);
+}

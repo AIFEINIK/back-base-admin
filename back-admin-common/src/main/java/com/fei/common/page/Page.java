@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -28,6 +29,10 @@ public class Page<T> implements Serializable {
 
     public boolean notEmpty() {
         return !CollectionUtils.isEmpty(this.page);
+    }
+
+    public static <T> Page<T> emptyPage() {
+        return new Page<>(Collections.emptyList());
     }
 
     public Page(int total, List<T> page) {

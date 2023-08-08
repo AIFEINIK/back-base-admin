@@ -1,0 +1,37 @@
+package ${packageName}.interfaces.request;
+
+import com.fei.common.page.PageRequest;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import java.io.Serializable;
+
+/**
+ * @author ${author}
+ * @description ${functionName}request
+ */
+@Data
+@ApiModel("${functionName}request")
+public class Search${ClassName}PageRequest extends PageRequest implements Serializable {
+
+    @ApiModelProperty("${pkColumn.columnComment}集合")
+    private List<${pkColumn.javaType}> ${pkColumn.javaField}s;
+
+#foreach ($column in $columns)
+#if(!$table.isSuperColumn($column.javaField))
+#if($column.javaType == 'Date')
+    #if($column.javaField.length() > 2 && $column.javaField.substring(1,2).matches("[A-Z]"))
+        #set($AttrName=$column.javaField)
+    #else
+        #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
+    #end
+    @ApiModelProperty("开始${column.columnComment}")
+    private Long begin${AttrName};
+
+    @ApiModelProperty("结束${column.columnComment}")
+    private Long end${AttrName};
+
+#end
+#end
+#end
+}

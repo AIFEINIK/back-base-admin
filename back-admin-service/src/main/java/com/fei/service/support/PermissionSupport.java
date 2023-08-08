@@ -8,8 +8,8 @@ import com.fei.domain.RoleDomain;
 import com.fei.model.bo.SysMenuBO;
 import com.fei.model.bo.SysRoleBO;
 import com.fei.model.bo.SysUserBO;
-import com.fei.model.condition.SysMenuSearchCondition;
-import com.fei.model.condition.SysRoleSearchCondition;
+import com.fei.model.bo.condition.SysMenuSearchCondition;
+import com.fei.model.bo.condition.SysRoleSearchCondition;
 import com.google.common.collect.Sets;
 import org.springframework.stereotype.Component;
 
