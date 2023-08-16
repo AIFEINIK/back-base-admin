@@ -8,8 +8,8 @@ import com.fei.domain.RoleDomain;
 import com.fei.model.bo.SysMenuBO;
 import com.fei.model.bo.SysRoleBO;
 import com.fei.model.bo.SysUserBO;
-import com.fei.model.bo.condition.SysMenuSearchCondition;
-import com.fei.model.bo.condition.SysRoleSearchCondition;
+import com.fei.model.bo.condition.SysMenuSearchConditionBO;
+import com.fei.model.bo.condition.SysRoleSearchConditionBO;
 import com.google.common.collect.Sets;
 import org.springframework.stereotype.Component;
 
@@ -34,7 +34,7 @@ public class PermissionSupport {
             return Sets.newHashSet("admin");
         }
 
-        SysRoleSearchCondition roleSearchCondition = new SysRoleSearchCondition();
+        SysRoleSearchConditionBO roleSearchCondition = new SysRoleSearchConditionBO();
         roleSearchCondition.setUserId(sysUser.getUserId());
         List<SysRoleBO> roles = roleDomain.searchSysUsers(roleSearchCondition, PageRequest.NO_PAGE);
 
@@ -50,7 +50,7 @@ public class PermissionSupport {
             return Sets.newHashSet("*:*:*");
         }
 
-        SysMenuSearchCondition menuSearchCondition = new SysMenuSearchCondition();
+        SysMenuSearchConditionBO menuSearchCondition = new SysMenuSearchConditionBO();
         menuSearchCondition.setUserId(sysUser.getUserId());
         List<SysMenuBO> sysMenus = menuDomain.searchSysMenus(menuSearchCondition, PageRequest.NO_PAGE);
         return sysMenus.stream().map(SysMenuBO::getPerms)
@@ -63,12 +63,12 @@ public class PermissionSupport {
     public List<SysMenuBO> getSysMenusByUserId(Long userId) {
         List<SysMenuBO> sysMenus;
         if (SecurityUtils.isAdmin(userId)) {
-            SysMenuSearchCondition menuSearchCondition = new SysMenuSearchCondition();
+            SysMenuSearchConditionBO menuSearchCondition = new SysMenuSearchConditionBO();
             menuSearchCondition.setMenuTree(true);
             sysMenus = menuDomain.searchSysMenus(menuSearchCondition, PageRequest.NO_PAGE);
 
         } else {
-            SysMenuSearchCondition menuSearchCondition = new SysMenuSearchCondition();
+            SysMenuSearchConditionBO menuSearchCondition = new SysMenuSearchConditionBO();
             menuSearchCondition.setUserId(userId);
             menuSearchCondition.setMenuTree(true);
             sysMenus = menuDomain.searchSysMenus(menuSearchCondition, PageRequest.NO_PAGE);

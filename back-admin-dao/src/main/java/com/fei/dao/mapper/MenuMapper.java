@@ -1,7 +1,7 @@
 package com.fei.dao.mapper;
 
 import com.fei.dao.entity.SysMenu;
-import com.fei.model.bo.condition.SysMenuSearchCondition;
+import com.fei.model.bo.condition.SysMenuSearchConditionBO;
 
 import java.util.List;
 
@@ -10,5 +10,5 @@ import java.util.List;
  * @description
  */
 public interface MenuMapper {
-    List<SysMenu> searchSysMenus(SysMenuSearchCondition condition);
+    List<SysMenu> searchSysMenus(SysMenuSearchConditionBO condition);
 }

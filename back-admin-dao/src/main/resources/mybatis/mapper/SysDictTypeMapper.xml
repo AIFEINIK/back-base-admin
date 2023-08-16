@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fei.dao.mapper.SysDictTypeMapper">
+
+    <sql id="searchAllColumns">
+        select dict_id, dict_name, dict_type, status, create_by, create_time, update_by, update_time, remark from sys_dict_type
+    </sql>
+
+    <sql id="searchCondition">
+        <where>
+            <if test="dictName != null"> and dict_name like concat('%', #{dictName}, '%')</if>
+            <if test="dictType != null"> and dict_type = #{dictType}</if>
+            <if test="status != null"> and status = #{status}</if>
+        </where>
+    </sql>
+
+    <insert id="saveSysDictType"  useGeneratedKeys="true" keyProperty="dictId">
+        insert into sys_dict_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dictName != null">dict_name,</if>
+            <if test="dictType != null">dict_type,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="dictName != null">#{dictName},</if>
+            <if test="dictType != null">#{dictType},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <insert id="batchSaveSysDictType"  useGeneratedKeys="true" keyProperty="dictId">
+        <foreach collection="list" item="item" separator=";">
+            insert into sys_dict_type
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="dictName != null">dict_name,</if>
+                <if test="dictType != null">dict_type,</if>
+                <if test="status != null">status,</if>
+                <if test="createBy != null">create_by,</if>
+                <if test="createTime != null">create_time,</if>
+                <if test="updateBy != null">update_by,</if>
+                <if test="updateTime != null">update_time,</if>
+                <if test="remark != null">remark,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.dictName != null">#{item.dictName},</if>
+                <if test="item.dictType != null">#{item.dictType},</if>
+                <if test="item.status != null">#{item.status},</if>
+                <if test="item.createBy != null">#{item.createBy},</if>
+                <if test="item.createTime != null">#{item.createTime},</if>
+                <if test="item.updateBy != null">#{item.updateBy},</if>
+                <if test="item.updateTime != null">#{item.updateTime},</if>
+                <if test="item.remark != null">#{item.remark},</if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <delete id="deleteSysDictTypeByDictId">
+        delete from sys_dict_type where dict_id = #{dictId}
+    </delete>
+
+    <delete id="deleteSysDictTypeByDictIds">
+        delete from sys_dict_type where dict_id in
+        <foreach item="dictId" collection="list" open="(" separator="," close=")">
+            #{dictId}
+        </foreach>
+    </delete>
+
+    <update id="modifySysDictType">
+        update sys_dict_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="dictName != null">dict_name = #{dictName},</if>
+            <if test="dictType != null">dict_type = #{dictType},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where dict_id = #{dictId}
+    </update>
+
+    <update id="batchModifySysDictType">
+        <foreach collection="list" item="item" separator=";">
+            update sys_dict_type
+            <trim prefix="SET" suffixOverrides=",">
+                <if test="dictName != null">dict_name = #{item.dictName},</if>
+                <if test="dictType != null">dict_type = #{item.dictType},</if>
+                <if test="status != null">status = #{item.status},</if>
+                <if test="createBy != null">create_by = #{item.createBy},</if>
+                <if test="createTime != null">create_time = #{item.createTime},</if>
+                <if test="updateBy != null">update_by = #{item.updateBy},</if>
+                <if test="updateTime != null">update_time = #{item.updateTime},</if>
+                <if test="remark != null">remark = #{item.remark},</if>
+            </trim>
+            where dict_id = #{item.dictId}
+        </foreach>
+    </update>
+
+    <select id="searchSysDictTypeWithCondition" resultType="com.fei.dao.entity.SysDictType">
+        <include refid="searchAllColumns"/>
+        <include refid="searchCondition"/>
+    </select>
+    
+    <select id="getSysDictTypeByDictId" resultType="com.fei.dao.entity.SysDictType">
+        <include refid="searchAllColumns"/>
+        where dict_id = #{dictId}
+    </select>
+
+    <select id="searchSysDictTypeCount" resultType="integer">
+        select count(*) from sys_dict_type
+        <include refid="searchCondition"/>
+    </select>
+</mapper>

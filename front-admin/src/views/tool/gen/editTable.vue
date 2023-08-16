@@ -163,9 +163,9 @@ export default {
     if (tableId) {
       // 获取表详细信息
       getGenTable(tableId).then(res => {
-        this.columns = res.data.rows;
-        this.info = res.data.info;
-        this.tables = res.data.tables;
+        this.columns = res.rows;
+        this.info = res.info;
+        this.tables = res.tables;
       });
       /** 查询字典下拉列表 */
       getDictOptionselect().then(response => {
@@ -173,7 +173,7 @@ export default {
       });
       /** 查询菜单下拉列表 */
       getMenuTreeselect().then(response => {
-        this.menus = this.handleTree(response.data, "menuId");
+        this.menus = this.handleTree(response.page, "menuId");
       });
     }
   },
@@ -193,11 +193,9 @@ export default {
             treeParentCode: genTable.treeParentCode,
             parentMenuId: genTable.parentMenuId
           };
-          updateGenTable(genTable).then(res => {
-            this.$modal.msgSuccess(res.msg);
-            if (res.code === 200) {
-              this.close();
-            }
+          updateGenTable(genTable).then(() => {
+            this.$modal.msgSuccess("修改成功");
+            this.close();
           });
         } else {
           this.$modal.msgError("表单校验未通过，请重新检查提交内容");

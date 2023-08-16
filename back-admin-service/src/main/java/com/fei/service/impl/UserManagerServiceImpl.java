@@ -14,7 +14,7 @@ import com.fei.interfaces.request.SearchSysUserPageRequest;
 import com.fei.interfaces.response.SearchSysUserPageResponse;
 import com.fei.interfaces.response.UserInfoResponse;
 import com.fei.model.bo.SysUserBO;
-import com.fei.model.bo.condition.SysUserSearchCondition;
+import com.fei.model.bo.condition.SysUserSearchConditionBO;
 import com.fei.service.UserManagerService;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +41,7 @@ public class UserManagerServiceImpl implements UserManagerService {
 
     @Override
     public Result<Page<SearchSysUserPageResponse>> searchSysUserPage(SearchSysUserPageRequest request) {
-        SysUserSearchCondition userSearchCondition = BeanUtils.transform(SysUserSearchCondition.class, request, true, BeanUtils.TransformEnumType.NAME_TO_ENUM);
+        SysUserSearchConditionBO userSearchCondition = BeanUtils.transform(SysUserSearchConditionBO.class, request, true, BeanUtils.TransformEnumType.NAME_TO_ENUM);
         int count = userManagerDomain.getSysUserCount(userSearchCondition);
         if (count == 0) {
             return new Result<>(new Page<>(Collections.emptyList()));

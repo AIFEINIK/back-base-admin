@@ -2,14 +2,12 @@ package com.fei.model.bo.condition;
 
 import lombok.Data;
 
-import java.util.Date;
-
 /**
  * @author ZhangPengFei
  * @description
  */
 @Data
-public class SysRoleSearchCondition {
+public class SysRoleSearchConditionBO {
 
     private Long userId;
 }

@@ -7,7 +7,7 @@ import lombok.Data;
  * @description
  */
 @Data
-public class SysMenuSearchCondition {
+public class SysMenuSearchConditionBO {
 
     private Long userId;
     private Boolean menuTree;

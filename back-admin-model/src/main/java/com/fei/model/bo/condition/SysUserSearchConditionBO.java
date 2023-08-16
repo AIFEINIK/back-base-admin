@@ -9,7 +9,7 @@ import java.util.Date;
  * @description
  */
 @Data
-public class SysUserSearchCondition {
+public class SysUserSearchConditionBO {
 
     private String userName;
     private Date beginCreateTime;

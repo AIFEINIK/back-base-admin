@@ -1,7 +1,7 @@
 package com.fei.dao.mapper;
 
 import com.fei.dao.entity.SysRole;
-import com.fei.model.bo.condition.SysRoleSearchCondition;
+import com.fei.model.bo.condition.SysRoleSearchConditionBO;
 
 import java.util.List;
 
@@ -10,5 +10,5 @@ import java.util.List;
  * @description
  */
 public interface RoleMapper {
-    List<SysRole> searchSysRoles(SysRoleSearchCondition condition);
+    List<SysRole> searchSysRoles(SysRoleSearchConditionBO condition);
 }
