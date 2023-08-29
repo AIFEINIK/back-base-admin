@@ -1,6 +1,6 @@
 package ${packageName}.interfaces.request;
 
-import com.fei.common.page.PageRequest;
+import ${packageName}.common.page.PageRequest;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

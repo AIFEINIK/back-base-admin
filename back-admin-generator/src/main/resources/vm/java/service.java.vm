@@ -2,8 +2,8 @@ package ${packageName}.service;
 
 import ${packageName}.interfaces.request.Search${ClassName}PageRequest;
 import ${packageName}.interfaces.response.Search${ClassName}PageResponse;
-import com.fei.common.page.Page;
-import com.fei.common.result.Result;
+import ${packageName}.common.page.Page;
+import ${packageName}.common.result.Result;
 
 /**
  * @author ${author}

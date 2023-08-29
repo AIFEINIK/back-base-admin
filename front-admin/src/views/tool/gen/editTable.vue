@@ -97,20 +97,6 @@
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column label="字典类型" min-width="12%">
-            <template slot-scope="scope">
-              <el-select v-model="scope.row.dictType" clearable filterable placeholder="请选择">
-                <el-option
-                  v-for="dict in dictOptions"
-                  :key="dict.dictType"
-                  :label="dict.dictName"
-                  :value="dict.dictType">
-                  <span style="float: left">{{ dict.dictName }}</span>
-                  <span style="float: right; color: #8492a6; font-size: 13px">{{ dict.dictType }}</span>
-              </el-option>
-              </el-select>
-            </template>
-          </el-table-column>
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="生成信息" name="genInfo">
@@ -128,7 +114,6 @@
 
 <script>
 import { getGenTable, updateGenTable } from "@/api/tool/gen";
-import { optionselect as getDictOptionselect } from "@/api/system/dict/type";
 import { listMenu as getMenuTreeselect } from "@/api/system/menu";
 import basicInfoForm from "./basicInfoForm";
 import genInfoForm from "./genInfoForm";
@@ -150,8 +135,6 @@ export default {
       tables: [],
       // 表列信息
       columns: [],
-      // 字典信息
-      dictOptions: [],
       // 菜单信息
       menus: [],
       // 表详细信息
@@ -167,10 +150,7 @@ export default {
         this.info = res.info;
         this.tables = res.tables;
       });
-      /** 查询字典下拉列表 */
-      getDictOptionselect().then(response => {
-        this.dictOptions = response.data;
-      });
+
       /** 查询菜单下拉列表 */
       getMenuTreeselect().then(response => {
         this.menus = this.handleTree(response.page, "menuId");

@@ -6,9 +6,9 @@ import ${packageName}.domain.${ClassName}Domain;
 import ${packageName}.interfaces.request.Search${ClassName}PageRequest;
 import ${packageName}.interfaces.response.Search${ClassName}PageResponse;
 import ${packageName}.model.bo.condition.${ClassName}SearchConditionBO;
-import com.fei.common.page.Page;
-import com.fei.common.result.Result;
-import com.fei.common.page.PageRequest;
+import ${packageName}.common.page.Page;
+import ${packageName}.common.result.Result;
+import ${packageName}.common.page.PageRequest;
 import org.springframework.stereotype.Service;
 import static com.fei.common.utils.BeanUtils.*;
 

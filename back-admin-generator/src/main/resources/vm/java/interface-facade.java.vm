@@ -1,7 +1,7 @@
 package ${packageName}.interfaces.facade;
 
-import com.fei.common.page.Page;
-import com.fei.common.result.Result;
+import ${packageName}.common.page.Page;
+import ${packageName}.common.result.Result;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 

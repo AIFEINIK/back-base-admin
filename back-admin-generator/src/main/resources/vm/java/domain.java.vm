@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import static com.fei.common.utils.BeanUtils.*;
 import com.github.pagehelper.PageHelper;
-import com.fei.common.page.PageRequest;
+import ${packageName}.common.page.PageRequest;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
