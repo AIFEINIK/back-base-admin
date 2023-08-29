@@ -10,7 +10,7 @@ import ${packageName}.common.page.Page;
 import ${packageName}.common.result.Result;
 import ${packageName}.common.page.PageRequest;
 import org.springframework.stereotype.Service;
-import static com.fei.common.utils.BeanUtils.*;
+import static ${packageName}.common.utils.BeanUtils.*;
 
 /**
  * @author ${author}

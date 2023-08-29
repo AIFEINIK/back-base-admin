@@ -2,7 +2,7 @@ package ${packageName}.domain;
 
 import java.util.List;
 import java.util.Objects;
-import static com.fei.common.utils.BeanUtils.*;
+import static ${packageName}.common.utils.BeanUtils.*;
 import com.github.pagehelper.PageHelper;
 import ${packageName}.common.page.PageRequest;
 import org.apache.commons.collections4.CollectionUtils;
