@@ -31,6 +31,7 @@ services:
     volumes:
       - ./volumes/redis/conf:/usr/local/etc/redis
       - ./volumes/redis/data:/data
+    command: redis-server /usr/local/etc/redis/redis.conf
     networks:
       - back-base-admin-1
 
