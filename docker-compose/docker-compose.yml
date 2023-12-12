@@ -1,0 +1,69 @@
+version: '3'
+
+services:
+  # mariadb数据库服务
+  mariadb:
+    # 镜像名称
+    image: mariadb:latest
+    # 容器名称
+    container_name: back-admin-mariadb
+    # 环境变量
+    environment:
+      MARIADB_ROOT_PASSWORD: pfnn123
+    # 端口映射
+    ports:
+      - "3306:3306"
+    # 数据卷挂载
+    volumes:
+      - ./volumes/mariadb/conf:/etc/mysql # mysql配置
+      - ./volumes/mariadb/data:/var/lib/mysql # mysql数据存储
+      - ./volumes/mariadb/log:/var/log/mysql # mysql日志
+      - ./volumes/mariadb/init-scripts:/docker-entrypoint-initdb.d # mysql容器启动会执行init-scripts下的初始化脚本
+    # 加入自定义网络
+    networks:
+      - back-base-admin-1
+
+  redis:
+    image: redis:latest
+    container_name: back-admin-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./volumes/redis/conf:/usr/local/etc/redis
+      - ./volumes/redis/data:/data
+    networks:
+      - back-base-admin-1
+
+  back-admin:
+    build:
+      # 后端镜像构建上线文目录，docker-compose.yml的相对路径
+      context: ../back-admin-web
+      # 后端项目构建的Dockerfile文件
+      dockerfile: Dockerfile
+    container_name: back-admin-auto
+    ports:
+      - "10010:10010"
+    environment:
+      JAVA_OPTS: "-Xms512m -Xmx512m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5006"
+    # 服务依赖配置，后端项目容器依赖mariadb服务与redis服务，back-admin-auto容器启动会先启动mariadb与redis容器
+    depends_on:
+      - mariadb
+      - redis
+    networks:
+      - back-base-admin-1
+
+  front-admin:
+    build:
+      context: ../front-admin
+      dockerfile: Dockerfile
+    container_name: front-admin-auto
+    ports:
+      - "8080:80"
+    depends_on:
+      - back-admin
+    networks:
+      - back-base-admin-1
+# 自定义网络
+networks:
+  back-base-admin-1:
+    driver: bridge
