@@ -1,4 +1,4 @@
-create database back_base_admin;
+create database back_base_admin default character set utf8mb4 collate utf8mb4_bin;
 use back_base_admin;
 
 -- ----------------------------
